@@ -1,0 +1,5 @@
+[build]
+command = npm run build
+
+[context.storybook]
+command = npm run build-storybook
