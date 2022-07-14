@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const ToastWrapper = styled.div<Props>`
-
  animation: ${props =>
     props.animation ? props.animation : 'from-right'}
       0.7s;
@@ -51,17 +50,17 @@ export const ToastWrapper = styled.div<Props>`
 `;
 
 export const ToastMain = styled.div<Props>`
-    background: #fff;
+    background-color: ${props => props.bgColor };
     transition: 0.3s ease;
     position: relative;
     pointer-events: auto;
     margin: 0 0 6px;
     padding: 30px;
     margin-bottom: 15px;
-     height: 50px;
+    height: 50px;
     width: 365px;
     border-radius: 3px 3px 3px 3px;
-    box-shadow: 4px 4px 8px #00000029;
+    box-shadow: 4px 4px 8px gray;
     border-radius: 24px;
     color: #fff;
     opacity: 1;
@@ -90,11 +89,9 @@ export const ImgBox = styled.div<Props>`
 `;
 
 export const Container = styled.div<Props>`
-    background-color: ${props => props.bgColor};
     box-sizing: border-box;
     position: fixed;
     z-index: 100;
-
     &.top-right {
     top: ${props =>
     props.toastMargin ? props.toastMargin : '20px'};
@@ -104,7 +101,6 @@ export const Container = styled.div<Props>`
     animation: ${props =>
     props.animation ? props.animation : 'from-right'}
       0.7s;
-
   }
 
   &.bottom-right {

@@ -1,10 +1,14 @@
-import {toastToShow} from '../containers/ToastService';
+import React from 'react';
+
+import { toastToShow } from '../core/ToastsService';
+import { toastProperties } from '../containers/ToastService';
 import Toast from '../components/Toast/index';
+import ToastRefContainer from '../containers/ToastRefContainer'
 
 
 export default {
   title: 'Toast-library',
-  component: Toast,
+  component: ToastRefContainer,
   argTypes: {
     type: {
       control: {
@@ -57,13 +61,19 @@ export default {
         type: 'text',
       },
     },
+    onDelete: {
+      action: 'clicked',
+    },
   },
 };
+
+
+const Template = args => <ToastRefContainer {...args} />;
 
 export interface ToastShapeProps {
   description: string;
   title: string,
-  type: 'warning' | 'success' | 'info' | 'error';
+  type?: string;
   position: string;
   autoDelete: boolean;
   deleteDelay:  number;
@@ -73,32 +83,31 @@ export interface ToastShapeProps {
   toastMargin: string;
 }
 
+//  export const ToastShape = (args: ToastShapeProps) =>
+//    toastProperties.getToast(args.description, {
+//     type: args.type,
+//     position: args.position,
+//     title: args.title,
+//     autoDelete: args.autoDelete,
+//     delay: args.deleteDelay,
+//     animation: args.animation,
+//     bgColor: args.backgroundColor,
+//     textColor: args.textColor,
+//     toastMargin: args.toastMargin,
+//   });
 
 
-export const ToastShape = (args: ToastShapeProps) =>
-  toastToShow.getToast(args.description, {
-    type: args.type,
-    position: args.position,
-    title: args.title,
-    autoDelete: args.autoDelete,
-    delay: args.deleteDelay,
-    animation: args.animation,
-    bgColor: args.backgroundColor,
-    textColor: args.textColor,
-    toastMargin: args.toastMargin,
-  });
-
-
-
+export const ToastShape = Template.bind({});
 ToastShape.args = {
-  type: 'info',
+  type: '',
   title: '',
   position: 'top-left',
   autoDelete: false,
   deleteDelay: 2000,
   animation: '',
   description: 'toast description',
-  backgroundColor: '',
+  bgColor: '',
   textColor: '',
-  toastMargin: '',
+  toastMargin: '20px',
+  onDelete: () => console.log('click'),
 };

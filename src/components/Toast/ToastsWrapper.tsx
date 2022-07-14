@@ -5,6 +5,6 @@ import {ToastPortalProps} from '../ToastPortal/ToastPortal';
 
 
 
-export const ToastsWrapper: FC<ToastPortalProps> = ({ children }) => {
+export const ToastsWrapper: FC<ToastPortalProps> = ({  children }) => {
   return <ToastPortal>{children}</ToastPortal>;
 };

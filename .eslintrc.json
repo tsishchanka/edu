@@ -23,6 +23,7 @@
         "react-hooks"
     ],
     "rules": {
+
       "comma-dangle": [
         "error",
         "always-multiline"
@@ -49,6 +50,7 @@
             "error",
             "as-needed"
         ],
+     "react/display-name": "off",
     "react/prop-types": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-closing-tag-location": 2,

@@ -3,7 +3,7 @@ export interface ToastItemArgs {
     title?: string;
     bgColor?: string;
     animation?: string;
-    type: 'warning' | 'success' | 'info' | 'error';
+    type?: string;
     position?: string;
     delay: number;
     autoDelete?: boolean;

@@ -1,90 +1,72 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 
 import ErrorBoundary from '../ErrorBoundary';
+
+import {getTitle, getTextColor, getBackgroundColor, getIcon} from '../../utils';
 
 import {ToastWrapper, Button, ImgBox, TextWrapper, Title, Description, Container, ToastMain} from './Toast.styles';
 
 
 export interface ToastItemArgs {
+    id?: string | number;
     title?: string;
     bgColor?: string;
     animation?: string;
-    type: 'warning' | 'success' | 'info' | 'error';
+    type?: string;
     position?: string;
-    delay: number;
+    delay?: number;
     autoDelete?: boolean;
     deleteDelay?:  number;
-    toastList: Array<any>;
+    toastList?: Array<any>;
     description?: string;
     textColor?: string;
     toastMargin?: string;
+    onDeleteToast?: any;
 }
 
 
-const Toast: FC<ToastItemArgs> = ({ ...props}) => {
-  const { toastList, position, title, description,
-    autoDelete, deleteDelay, textColor, animation,
-    toastMargin, bgColor } = props;
-  const [list, setList] = useState([toastList]);
-  useEffect(() => {
-    setList([...toastList]);
-  }, [toastList]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (autoDelete && toastList.length && list.length) {
-        handleDeleteToast(toastList[0].id);
-      }
-    }, deleteDelay);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [toastList, autoDelete, deleteDelay, list]);
-
-
-  const handleDeleteToast = (id: string) => {
-    const newToastList = list.filter((toast: any) => toast.id !== id);
-    setList([...newToastList]);
-  };
+const Toast: FC<ToastItemArgs> = ({ ...props }) => {
+  const {  position, title, description,
+    type, textColor, animation, toastMargin,
+    bgColor, id, onDeleteToast } = props;
 
   return  (
     <ErrorBoundary>
       <ToastWrapper animation={animation} bgColor={bgColor} >
         <Container className={position} toastMargin={toastMargin}>
-          {list.map((toast: any) => (
-            <ToastMain
-              key={`'toast'-${toast.id}`}
-              style={{
-                backgroundColor: bgColor === '' ? toast.bgColor : bgColor,
-              }}  onDrag={() => handleDeleteToast(toast.id)} draggable={true}
-            >
+          {/* {list.map((toast: any) => ( */}
+          <ToastMain
+            // key={`'toast'-${toast.id}`}
+            style={{
+              backgroundColor: bgColor === '' ? getBackgroundColor(type) : bgColor,
+            }}  onDrag={() => onDeleteToast(id)} draggable={true}
+          >
 
-              <ImgBox style={{
-                color: textColor === '' ? toast.textColor : textColor,
-              }}>
-                <img src={toast.icon} />
-              </ImgBox>
-              <TextWrapper >
-                <Title>
-                  {title !== '' ? title : toast.title}
-                </Title>
-                <Description style={{
-                  color: textColor === '' ? toast.textColor : textColor,
-                }}>{description !== '' ? description : toast.description}
-                </Description>
-                <Button
+            <ImgBox style={{
+              color: textColor === '' ? getTextColor(type) : textColor,
+            }}>
+              <img src={getIcon(type)} />
+            </ImgBox>
+            <TextWrapper >
+              <Title>
+                {title !== '' ? title : getTitle(type)}
+              </Title>
+              <Description style={{
+                color: textColor === '' ? getTextColor(type) : textColor,
+              }}>{description !== '' ? description : description}
+              </Description>
+              <Button
 
-                  onClick={() => handleDeleteToast(toast.id)}
-                  style={{
-                    color: textColor === '' ? toast.textColor : textColor,
-                  }}
-                >
+                onClick={()=>onDeleteToast(id)}
+                style={{
+                  color: textColor === '' ? getTextColor(type) : textColor,
+                }}
+              >
                   X
-                </Button>
-              </TextWrapper>
-            </ToastMain>
-          ))}
+              </Button>
+            </TextWrapper>
+          </ToastMain>
+          {/* ))} */}
         </Container>
       </ToastWrapper>
     </ErrorBoundary>
